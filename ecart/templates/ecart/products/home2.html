@@ -1,0 +1,50 @@
+{% extends "ecart/layouts/main.html" %}
+
+{% block content %}
+<div class="py-3 bg-success">
+    <div class="container">
+        <a class="text-white" href="{% url "home" %}">Home / </a>
+        <a class="text-white" href="{% url "collections" %}">Collections / </a>
+        <a class="text-white" href="{% url "collectionsview" category.slug %}">{{category.name}}</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1> {{category.name}} </h1>
+            <hr>
+            <div class="row">
+            {% for item in products %}
+                <div class="col-md-3">
+                    <div class="card card-box">
+                        <a href="{% url "productview" item.category.slug item.slug %}">
+                            <div class="card-body">
+                                <div class="catgeory-image">
+                                    <img src="{{item.product_image.url}}" alt="product-image" class="w-100 product-image" height="180px" >
+                                </div>
+                                <br>
+                                <h4 class="text-center"> {{item.name}} </h4>
+                                <span class="float-start">{{item.original_price | stringformat:'d' }}</span>
+                                <span class="float-end">{{item.selling_price | stringformat:'d'}}</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card-box {
+    height: 350px; /* Set the desired height for card boxes */
+}
+.product-image {
+    object-fit: cover;
+    height: 200px;
+}
+</style>
+
+{% endblock content %}
